@@ -1,0 +1,78 @@
+//include library code
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+//declare level
+int level = 0;
+
+//declare delay function
+void delaySequence(){
+  delay(3000);
+  lcd.clear();
+  delay(1000);
+}
+
+String lastQuestion;
+
+void aaq(String x, int y, int z, String a){
+if (digitalRead(6)==HIGH && level == y && z == 1 && lastQuestion == a){
+      lastQuestion = x;
+      lcd.clear();
+      lcd.print(x);
+      level = ++level;
+      delay(1000);
+}
+if (digitalRead(7)==HIGH && level == y && z == 2 && lastQuestion == a){
+      lastQuestion = x;
+      lcd.clear();
+      lcd.print(x);
+      level = ++level;
+      delay(1000);
+} 
+}
+void setup(){
+  //declare pins
+  pinMode(6, INPUT);
+  pinMode(7, INPUT);
+
+  //set up # of columns and rows
+  lcd.begin(16, 2);
+  //print that message bro
+  lcd.print("yo waz gud homie");
+  
+  //delay sequence
+  delaySequence();
+  
+  //print that next message brobro
+  lcd.print("i'm afro da gr8");
+  
+  //delay sequence
+  delaySequence();
+  
+  //let em know what's up 
+  lcd.print("press 6 for YES");
+  lcd.setCursor(1, 2);
+  lcd.print("and 7 for NO ");
+  //delay sequence
+  delaySequence();
+}
+
+void loop(){
+  //BEGIN 21 QUESTIONS
+  if (level == 0){
+    lcd.print("are you cool?");
+    level = 1;
+    lastQuestion = "are you cool?";
+  }
+  //level 1
+   aaq("are you spiffy?", 1, 1, "are you cool?");
+   aaq("are you drunk?", 1, 2, "are you cool?");
+
+  //level 2
+   aaq("do you suck?", 2, 1, "are you spiffy?");
+   aaq("do you even lift?", 2, 2, "are you spiffy?");
+   aaq("are you high?", 2, 1, "are you drunk?");
+   aaq("are you over 21?", 2, 2, "are you drunk?");
+}
+
